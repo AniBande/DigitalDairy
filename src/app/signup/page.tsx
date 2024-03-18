@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 
 
 
-
+// Signup page
 export default function SignupPage() {
     const router = useRouter();
     const [user, setUser] = React.useState({
