@@ -1,9 +1,4 @@
 import mongoose , { Document} from "mongoose";
-
-interface MilkTransaction extends Document {
-    participants: mongoose.Types.ObjectId[];
-    transactions: mongoose.Types.ObjectId[];
-}
   
 const milkTransactionSchema = new mongoose.Schema(
 	{
@@ -24,6 +19,6 @@ const milkTransactionSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const MilkTransaction = mongoose.model("MilkTransaction", milkTransactionSchema);
+const MilkTransaction = mongoose.models.MilkTransaction || mongoose.model("MilkTransaction", milkTransactionSchema);
 
 export default MilkTransaction;

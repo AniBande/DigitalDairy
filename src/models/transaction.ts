@@ -40,6 +40,6 @@ import mongoose from "mongoose";
 { timestamps: true }
 );
 
-const Transaction = mongoose.model("Transaction", transactionSchema);
+const Transaction = mongoose.models.Transaction || mongoose.model("Transaction", transactionSchema);
 
 export default Transaction;
