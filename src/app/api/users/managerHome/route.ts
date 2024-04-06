@@ -7,7 +7,6 @@ connect()
 
 export async function POST(request: NextRequest){
     try {
-
         const reqBody = await request.json()
         const {farmerId, managerId, quantity, fat, snf, cost, paymentStatus} = reqBody;
         console.log(reqBody);

@@ -35,42 +35,47 @@ export default function managerHomePage() {
     // }
   };
 
-  // useEffect(() => {
-  //     if(user.email.length > 0 && user.password.length > 0) {
-  //         setButtonDisabled(false);
-  //     } else{
-  //         setButtonDisabled(true);
-  //     }
-  // }, [user]);
+  const getUserDetails = async () => {
+    try {
+      const res = await axios.get("/api/users/me");
+      setTransaction({ ...transaction, managerId: res.data.data._id });
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      toast.error("Error fetching user details. Please try again.");
+    }
+  };
+
+  const handleFarmerUsernameChange = async (username: String) => {
+    try {
+      const response = await axios.get(
+        `/api/users/farmerid?username=${username}`
+      );
+      setTransaction({ ...transaction, farmerId: response.data.data._id });
+    } catch (error) {
+      console.error("Error fetching farmer ID:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   return (
     <div className="container">
       <h1>Welcome, Dairy Manager</h1>
-      <div>
-        <h2>Select Farmer:</h2>
-        <select className="cursor-pointer text-blue-600 hover:underline">
-          <option value="farmer1">Farmer 1</option>
-          <option value="farmer2">Farmer 2</option>
-          <option value="farmer3">Farmer 3</option>
-          <option value="farmer4">Farmer 4</option>
-          <option value="farmer5">Farmer 5</option>
-        </select>
-      </div>
 
-      {/* <div className="input-field">
+      <div className="input-field">
         <label htmlFor="Enter_Farmer_Name">Enter Farmer Name :</label>
         <input
           type="String"
           id="Enter_Farmer_Name"
           name="Enter_Farmer_Name"
           placeholder="Enter Farmer Name"
-          value={transaction.quantity}
-          onChange={(e) =>
-            setTransaction({ ...transaction, quantity: e.target.value })
-          }
+          value={transaction.farmerId}
+          onChange={(e) => handleFarmerUsernameChange(e.target.value)}
           required
         />
-      </div> */}
+      </div>
 
       <div className="mt-4">
         <h2>Enter Milk Details:</h2>
@@ -153,8 +158,7 @@ export default function managerHomePage() {
         </button>
       </div>
 
-      <RecentTransactions/>
-
+      <RecentTransactions />
     </div>
   );
 }
