@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -17,6 +17,24 @@ export default function managerHomePage() {
     cost: "",
     paymentStatus: "Pending",
   });
+
+  const [snfFatRates, setsnfFatRates] = useState([
+    // Example rates for demonstration purposes
+    [10, 12, 14, 16],
+    [11, 13, 15, 17],
+    [12, 14, 16, 18],
+    [13, 15, 17, 19],
+  ]);
+
+
+  const calculateAmount = () => {
+    const { snf, fat, quantity } = transaction;
+    const rate = snfFatRates[Number(snf) - 1][Number(fat) - 1]; // Adjust indices since array is 0-based
+    const amount = rate * Number(quantity); // Convert quantity to number
+    setTransaction({ ...transaction, cost: amount.toString() }); // Convert amount back to string
+  };
+  
+
   // const [buttonDisabled, setButtonDisabled] = React.useState(false);
   // const [loading, setLoading] = React.useState(false);
 
@@ -130,7 +148,7 @@ export default function managerHomePage() {
             placeholder="Enter amount"
             value={transaction.cost}
             onChange={(e) =>
-              setTransaction({ ...transaction, cost: e.target.value })
+              calculateAmount()
             }
             required
           />
