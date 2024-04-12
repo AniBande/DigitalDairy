@@ -71,7 +71,7 @@ export default function managerHomePage() {
           id="Enter_Farmer_Name"
           name="Enter_Farmer_Name"
           placeholder="Enter Farmer Name"
-          value={transaction.farmerId}
+          //value={transaction.farmerId}
           onChange={(e) => handleFarmerUsernameChange(e.target.value)}
           required
         />
