@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import RecentTransactions from "./RecentTransactions";
+import { Profile } from "./Profile";
 
 export default function managerHomePage() {
   const router = useRouter();
@@ -177,6 +178,7 @@ export default function managerHomePage() {
       </div>
 
       <RecentTransactions />
+      <Profile/>
     </div>
   );
 }

@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please provide a username"],
         unique: true,
     },
+    name: {
+        type: String,
+    },
+    upiID: {
+        type: String,
+    },
     email: {
         type: String,
         required: [true, "Please provide a email"],
