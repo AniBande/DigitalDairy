@@ -1,7 +1,10 @@
 "use client";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+//import {useRouter} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import router from "next/router";
 
 interface Transaction {
   quantity: number;
@@ -27,6 +30,9 @@ export default function RecentTransactions() {
       toast.error("Error fetching user details. Please try again.");
     }
   };
+
+
+  
 
   useEffect(() => {
     getUserDetails();
@@ -60,30 +66,45 @@ export default function RecentTransactions() {
 
   return (
     <div className="container">
-      <h1>Transactions</h1>
+      <h1 className="text-white text-2xl mb-4">Transaction History</h1>
+      <hr className="w-full border-gray-200 mb-4" />
       <div>
-        <h2>Transaction List</h2>
+        {/* <h2>Transaction List</h2> */}
 
-        <button onClick={getUserDetails}>kunal</button>
-        <button onClick={fetchTransactions}>aniket</button>
+        {/* <button onClick={getUserDetails}>kunal</button>
+        <button onClick={fetchTransactions}>aniket</button> */}
 
         {loading ? (
           <p>Loading...</p>
         ) : (
           <div>
-            <ul>
-              {transactions
-                .slice(0, displayedTransactions)
-                .map((transaction, index) => (
-                  <li key={index}>
-                    <p>Quantity: {transaction.quantity}</p>
-                    <p>Cost: {transaction.cost}</p>
-                    <p>Payment Status: {transaction.paymentStatus}</p>
+            <div className="max-h-[200px] overflow-y-auto">
+              <ul>
+                {transactions.slice(0, displayedTransactions).map((transaction, index) => (
+                  <li key={index} className="flex flex-row items-center mb-4">
+                    <p className="mr-4">{index + 1}</p>
+                    <div className="mr-4 flex flex-row">
+                      <p className="font-bold">Quantity:</p>
+                      <p>{transaction.quantity}</p>
+                    </div>
+                    <div className="mr-4 flex flex-row">
+                      <p className="font-bold">Cost:</p>
+                      <p>{transaction.cost}</p>
+                    </div>
+                    <div className="flex flex-row">
+                      <p className="font-bold">Payment Status:</p>
+                      <p className={`ml-2 ${transaction.paymentStatus === 'Done' ? 'bg-green-500' : 'bg-yellow-500'}`}>
+                        {transaction.paymentStatus}
+                      </p>
+                    </div>
+
                   </li>
                 ))}
-            </ul>
+              </ul>
+            </div>
             {displayedTransactions < transactions.length && (
-              <button onClick={handleLoadMore}>More</button>
+             // <button onClick={handleLoadMore} className='bg-blue-500'>More</button>
+             <button onClick={handleLoadMore} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">More</button>
             )}
           </div>
         )}

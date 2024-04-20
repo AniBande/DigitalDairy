@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import RecentT from "./RecentT";
-
+import router from "next/router";
 
 
 
@@ -14,6 +14,17 @@ export default function FarmerPage() {
 
     const [totalMilkQuantity, setTotalMilkQuantity] = useState(0);
     const [totalCost, setTotalCost] = useState(0);
+
+
+    const completeHistory = async () => {
+        try {
+            console.log("complete History is getting fetched.....");
+            router.push("/Hist"); 
+        } catch (error) {
+            console.error("Error redirecting to completeHistory:", error);
+            toast.error("Error redirecting to completeHistory. Please try again.");
+        }
+      };
 
 
     const fetchTotalData = async () => {
@@ -33,18 +44,17 @@ export default function FarmerPage() {
 
     // JSX structure
     return (
-        <div >
-        {/* className="flex min-h-screen items-center justify-center px-6 py-12 lg:px-8 bg-white" */}
+        <div className="flex flex-col min-h-screen items-center justify-center px-6 py-12 lg:px-8 bg-white">
             {/* Background image */}
-            {/* <img
+            <img
                 src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4L62TJLiHl0jQD4r2v9AkKStJdZ-bXUuBTd80hevHbW84W-Vc2SeVlHWQ3aPfkCQnWxAyvQSn_DVRJsmbLQr7hAa61AC72ACxwZkhi3C6SDYwOfaJJZZOTbkgA04ubkNgRZDyWNC9AQ2t0mLWFncHp0agkrfUgjC4GVmnQwRx1lomc4HC_Hmy68GC_g/d/190822-FARM-LANDSCAPE-2@2x.png"
                 alt="bg-image"
                 className="absolute inset-0 w-full h-full object-cover"
-            /> */}
+            />
 
             {/* Content */}
 
-            {/* <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center max-w-sm rounded-lg shadow-lg p-8 relative opacity-90 backdrop-filter border border-gray-900 backdrop-blur-lg">
                     <h1 className="text-white text-2xl mb-4">Total Milk Data</h1>
                     <hr className="w-full border-gray-200 mb-4" />
@@ -60,12 +70,15 @@ export default function FarmerPage() {
                     </div>
 
                 </div>
-            </div> */}
+            </div>
 
-<div className="container mx-auto px-4">
-    <h1 className="text-2xl mb-4">hii</h1>
-    <RecentT />
-</div>
+            <br />
+
+            <div className="flex flex-col z-10 rounded-lg shadow-lg p-8 relative opacity-90 backdrop-filter border border-gray-900 backdrop-blur-lg">
+                <RecentT />
+             <button onClick={completeHistory} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">History</button>
+
+            </div>
 
 
         </div>
