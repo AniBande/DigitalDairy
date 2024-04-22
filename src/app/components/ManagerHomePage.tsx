@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import RecentTransactions from "./RecentTransactions";
@@ -9,10 +7,10 @@ import { Profile } from "./Profile";
 import { EditTransaction } from "./EditTransaction";
 //import { PendingTransactions } from "./PendingTransactions"
 import PendingTransactions from "./PendingTransactions";
+import { TransactionBox } from "./TransactionBox";
 
 
 export default function managerHomePage() {
-  const router = useRouter();
   const [transaction, setTransaction] = React.useState({
     farmerId: "",
     managerId: "",
@@ -184,6 +182,7 @@ export default function managerHomePage() {
         </div>
       </div>
       <div>
+        <TransactionBox/>
         <RecentTransactions />
         <Profile />
        

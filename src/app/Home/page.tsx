@@ -10,7 +10,7 @@ import Farmer from "@/app/components/Farmer"
 
 export default function HomePage() {
   const router = useRouter();
-  const [role, setRole] = useState("nothing");
+  const [role, setRole] = useState(null);
 
   const getUserDetails = async () => {
     try {
@@ -26,6 +26,10 @@ export default function HomePage() {
   useEffect(() => {
     getUserDetails();
   }, []);
+
+  if (role === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
