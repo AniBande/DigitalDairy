@@ -6,6 +6,10 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import RecentTransactions from "./RecentTransactions";
 import { Profile } from "./Profile";
+import { EditTransaction } from "./EditTransaction";
+//import { PendingTransactions } from "./PendingTransactions"
+import PendingTransactions from "./PendingTransactions";
+
 
 export default function managerHomePage() {
   const router = useRouter();
@@ -78,6 +82,7 @@ export default function managerHomePage() {
   useEffect(() => {
     getUserDetails();
   }, []);
+
 
   return (
     <div className="flex flex-row">
@@ -181,6 +186,11 @@ export default function managerHomePage() {
       <div>
         <RecentTransactions />
         <Profile />
+       
+      </div>
+      <div>
+      <PendingTransactions/>
+     
       </div>
     </div>
   );

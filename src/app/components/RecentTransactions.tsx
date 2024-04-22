@@ -39,6 +39,9 @@ export default function RecentTransactions() {
     return (
         <div className="container">
             <h1>Transactions</h1>
+
+            <button onClick={fetchTransactions} className="bg-blue-500">Refresh</button>
+
             <div>
                 <h2>Transaction List</h2>
                 {loading ? (

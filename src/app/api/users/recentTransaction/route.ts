@@ -21,8 +21,11 @@ export async function GET(request: NextRequest) {
         //     transactions = await Transaction.find();
         // }
 
-        transactions = await Transaction.find();
+        transactions = await Transaction.find().sort({ createdAt: -1 });
+         // Find transactions for the given farmer ID in descending order of creation date
+        // const transactions = await Transaction.find({ farmerId: id }).sort({ createdAt: -1 });
 
+        
         return NextResponse.json({
             transactions,
             success: true
