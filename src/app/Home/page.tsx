@@ -7,6 +7,9 @@ import { toast } from "react-hot-toast";
 import FarmerHomePage from "@/app/components/FarmerHomePage";
 import ManagerHomePage from "@/app/components/ManagerHomePage";
 import Farmer from "@/app/components/Farmer"
+import Dashb from "@/app/components/Dashb"
+import Analytics from "@/app/components/Analytics"
+
 
 export default function HomePage() {
   const router = useRouter();
@@ -34,7 +37,7 @@ export default function HomePage() {
   return (
     <div>
       {
-        role === 'farmer' ? <Farmer/> : <ManagerHomePage/>
+        role === 'farmer' ? <Analytics/> : <ManagerHomePage/>
       }
     </div>
   );
