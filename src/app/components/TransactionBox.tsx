@@ -28,6 +28,7 @@ export function TransactionBox() {
     cost: "",
     paymentStatus: "Pending",
   });
+  const [paymentStatus, setPaymentStatus] = useState("Pending");
 
   const [snfFatRates, setsnfFatRates] = useState([
     // Example rates for demonstration purposes
@@ -57,7 +58,7 @@ export function TransactionBox() {
         fat: "",
         snf: "",
         cost: "",
-        paymentStatus: "Pending"
+        paymentStatus: "Pending",
       });
     } catch (error: any) {
       console.log("transaction failed", error.message);
@@ -88,7 +89,7 @@ export function TransactionBox() {
       // If any of the fields is empty, keep the cost as it is
       setTransaction({ ...transaction, cost: "" });
     }
-  }, [transaction.quantity, transaction.fat, transaction.snf]);  
+  }, [transaction.quantity, transaction.fat, transaction.snf]);
 
   const handleFarmerSelect = async (username: String) => {
     try {
@@ -104,11 +105,13 @@ export function TransactionBox() {
   const handlePaymentStatusSelect = async (paymentStatus: string) => {
     try {
       setTransaction({ ...transaction, paymentStatus: paymentStatus });
+      setPaymentStatus(paymentStatus);
+      console.log("Updated payment status:", paymentStatus);
     } catch (error) {
       console.error("Error setting payment status:", error);
     }
   };
-  
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -192,9 +195,11 @@ export function TransactionBox() {
         >
           {isLoading ? (
             <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
-          ) : (
+          ) : (paymentStatus === "Pending" ? (
             "Pay"
-          )}
+          ) : (
+            "Save Transaction"
+          ))}
         </Button>
       </CardFooter>
     </Card>

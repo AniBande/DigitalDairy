@@ -61,7 +61,7 @@ export function Profile() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+      <span className="cursor-pointer font-semibold">Edit Profile</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
