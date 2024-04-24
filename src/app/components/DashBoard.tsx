@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import {
   Activity,
@@ -48,6 +49,10 @@ import {
 import { Profile } from "./Profile";
 import Logout from "./Logout";
 import { TransactionBox } from "./TransactionBox";
+import TransactionTable from "./TransactionTable";
+import { HistoryTable } from "./HistoryTable";
+import RecentTransactions from "./RecentTransactions";
+import { TableDemo } from "./TableDemo";
 
 export function Dashboard() {
   return (
@@ -183,6 +188,10 @@ export function Dashboard() {
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
           <TransactionBox/>
+          {/* <TransactionTable/> */}
+          {/* <HistoryTable/> */}
+          <TableDemo/>
+          {/* <RecentTransactions/> */}
           {/* <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center">
               <div className="grid gap-2">
@@ -320,7 +329,7 @@ export function Dashboard() {
               </Table>
             </CardContent>
           </Card> */}
-          <Card x-chunk="dashboard-01-chunk-5">
+          {/* <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
               <CardTitle>Recent Sales</CardTitle>
             </CardHeader>
@@ -401,7 +410,7 @@ export function Dashboard() {
                 <div className="ml-auto font-medium">+$39.00</div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </main>
     </div>

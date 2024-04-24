@@ -7,10 +7,16 @@ import mongoose from "mongoose";
         //ref: "User",
        // required: true,
       },
+      farmerName:{
+        type : String,
+      },
       managerId: {
         type: String, //mongoose.Schema.Types.ObjectId,
        // ref: "User",
        // required: true,
+      },
+      ManagerName:{
+        type : String,
       },
       quantity: { 
           type: Number, 

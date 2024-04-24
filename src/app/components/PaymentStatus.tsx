@@ -44,6 +44,12 @@ export function PaymentStatus({ onPaymentStatusSelect }: { onPaymentStatusSelect
     setPaymentStatus(arrayOfPaymentStatus);
   }, []);
 
+  const handlePaymentStatusSelect = (currentValue:any) => {
+    setValue(currentValue === value ? "" : currentValue)
+    onPaymentStatusSelect(currentValue)
+    setOpen(false)
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -68,10 +74,7 @@ export function PaymentStatus({ onPaymentStatusSelect }: { onPaymentStatusSelect
               <CommandItem
                 key={status.value}
                 value={status.value}
-                onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue)
-                  setOpen(false)
-                }}
+                onSelect={handlePaymentStatusSelect}
               >
                 <Check
                   className={cn(

@@ -4,7 +4,6 @@ import axios from "axios";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,

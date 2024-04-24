@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <div>
       {
-        role !== 'farmer' ? <Dashboard/> : <ManagerHomePage/>
+        role !== 'farmer' ? <Dashboard/> : <Analytics/>
       }
       {/* {
         role === 'farmer' ? <Farmer/> : <ManagerHomePage/>

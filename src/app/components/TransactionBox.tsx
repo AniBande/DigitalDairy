@@ -52,8 +52,8 @@ export function TransactionBox() {
       console.log("transaction success", response.data);
       toast.success("transaction success");
       setTransaction({
+        ... transaction, 
         farmerId: "",
-        managerId: "",
         quantity: "",
         fat: "",
         snf: "",
@@ -113,7 +113,7 @@ export function TransactionBox() {
   };
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[450px]">
       <CardHeader>
         <CardTitle>Make Transaction</CardTitle>
         <CardDescription>Make Transaction with any farmer.</CardDescription>
@@ -195,7 +195,7 @@ export function TransactionBox() {
         >
           {isLoading ? (
             <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
-          ) : (paymentStatus === "Pending" ? (
+          ) : (paymentStatus === "Done" ? (
             "Pay"
           ) : (
             "Save Transaction"
