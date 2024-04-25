@@ -13,8 +13,8 @@ interface Transaction {
 export default function RecentTransactions() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [batchSize, setBatchSize] = useState<number>(3);
-    const [displayedTransactions, setDisplayedTransactions] = useState<number>(3);
+    const [batchSize, setBatchSize] = useState<number>(5);
+    const [displayedTransactions, setDisplayedTransactions] = useState<number>(5);
     const [filterOption, setFilterOption] = useState<string>("all"); // Default filter option
 
     const fetchTransactions = async () => {

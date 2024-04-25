@@ -99,7 +99,7 @@ interface Transaction {
   quantity: number;
   cost: number;
   paymentStatus: string;
-  farmerId:string;
+  farmerId: string;
 
 }
 
@@ -114,7 +114,7 @@ export function TableDemo() {
   //   cost: "",
   //   paymentStatus: "Pending",
   // });
-  
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [batchSize, setBatchSize] = useState<number>(3);
@@ -157,32 +157,40 @@ export function TableDemo() {
   // useEffect(() => {
   //   getUserDetails();
   // }, []);
-  
+
   const fetchTransactions = async () => {
     try {
-        // setLoading(true);
-        const response = await axios.get(`/api/users/recentTransaction`);
-        setTransactions(response.data.transactions);
+      // setLoading(true);
+      const response = await axios.get(`/api/users/recentTransaction`);
+      setTransactions(response.data.transactions);
     } catch (error: any) {
-        console.error("Error fetching transactions:", error.message);
-        toast.error("Error fetching transactions");
+      console.error("Error fetching transactions:", error.message);
+      toast.error("Error fetching transactions");
     } finally {
-        // setLoading(false);
+      // setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchTransactions();
   }, []);
-  
+
   return (
-    <div className="w-full">
-      <div className="rounded-md border shadow-md">
+
+    
+    <div className="w-full rounded-lg border">
+      <div className="rounded-lg  border">
         <div className="h-[626px] relative overflow-auto">
+          
+              <div className="sticky top-0 flex flex-col z-50 rounded-t-lg border  bg-background px-4 md:px-6 w-full">
+                <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">Recent Transactions</h1>
+                <p className="text-sm text-muted-foreground mx-4 mt-4">A list of your recent Transactions.</p>
+              </div>
           <Table>
-            <TableCaption>A list of your recent Transactions</TableCaption>
+            {/* <TableCaption>A list of your recent Transactions</TableCaption> */}
+            
             <TableHeader>
-              <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">Recent Transactions</h1>
+             
               <TableRow>
                 <TableHead className="w-[100px]">Name</TableHead>
                 <TableHead>Quantity</TableHead>
@@ -193,10 +201,11 @@ export function TableDemo() {
             <TableBody>
               {/* <ScrollArea className="h-72 w-48 rounded-md border"> */}
               {/* <div className="max-h-[400px] overflow-auto"> */}
-              {transactions.map((transactions,index) => (
+              {transactions.map((transactions, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium">
-                    {transactions.farmerId}
+                    {/* {transactions.farmerId} */}
+                    Farmer Name
                   </TableCell>
                   <TableCell>{transactions.quantity}</TableCell>
                   <TableCell>{transactions.cost}</TableCell>

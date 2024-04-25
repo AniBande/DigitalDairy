@@ -1,48 +1,60 @@
-"use client"
-import Link from "next/link";
-import PendingTransactions from "./PendingTransactions";
+"use client";
+import * as React from "react";
 
-import {
-  CircleUser,
-  EditIcon,
-  LogOut,
-  Menu,
-  Package2,
-  Search,
-} from "lucide-react";
-
-
-import { Button } from "@/components/ui/button";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
- 
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Profile } from "./Profile";
 import Logout from "./Logout";
-import { TransactionBox } from "./TransactionBox";
-import TransactionTable from "./TransactionTable";
-import { HistoryTable } from "./HistoryTable";
-import RecentTransactions from "./RecentTransactions";
-import { TableDemo } from "./TableDemo";
+import { EditIcon } from "lucide-react";
 
-export function Dashboard() {
-  return (
-    <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+
+
+import Link from "next/link"
+import {
+    Activity,
+    ArrowUpRight,
+    CircleUser,
+    CreditCard,
+    DollarSign,
+    LogOut,
+    Menu,
+    Package2,
+    Search,
+    Users,
+} from "lucide-react"
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+
+
+
+  
+
+   
+export function Navbar() {
+    return (
+      
+
+        <header className="sticky top-0 flex h-16 z-50 items-center gap-4 border-b bg-background px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
             href="#"
@@ -170,16 +182,5 @@ export function Dashboard() {
           </DropdownMenu>
         </div>
       </header>
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          <TransactionBox/>
-          {/* <TransactionTable/> */}
-          {/* <HistoryTable/> */}
-          <TableDemo/> 
-          <PendingTransactions/>
-         
-        </div>
-      </main>
-    </div>
-  );
+    )
 }

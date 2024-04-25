@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { EditIcon } from "lucide-react";
 
 interface EditTransactionProps {
   trans: {
@@ -53,7 +54,9 @@ export function EditTransaction({ trans }: EditTransactionProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Transaction</Button>
+        <button>
+          <EditIcon/>
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
