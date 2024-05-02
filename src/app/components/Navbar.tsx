@@ -64,41 +64,36 @@ export function Navbar() {
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
-            href="#"
+            href="/Home"
             className="text-foreground transition-colors hover:text-foreground"
           >
-            Dashboard
+            Home
+          </Link>
+          <Link
+            href="/History"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+          >
+            History
           </Link>
           <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Orders
+            News
           </Link>
           <Link
-            href="#"
+            href="/MLFrontend"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Products
+            ML
           </Link>
           <Link
-            href="#"
+            href="/About_us"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Customers
+            About us
           </Link>
-          <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Analytics
-          </Link>
-          {/* <Edit/>
-          <Edit2/>
-          <Edit3/> */}
-          <EditIcon/>
-          {/* <Edit2Icon/>
-          <Edit3Icon/> */}
+          
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -120,32 +115,32 @@ export function Navbar() {
                 <Package2 className="h-6 w-6" />
                 <span className="sr-only">Acme Inc</span>
               </Link>
-              <Link href="#" className="hover:text-foreground">
-                Dashboard
+              <Link href="/Home" className="hover:text-foreground">
+                Home
+              </Link>
+              <Link
+                href="/History"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                History
               </Link>
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Orders
+                News
               </Link>
               <Link
-                href="#"
+                href="/MLFrontend"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Products
+                ML
               </Link>
               <Link
-                href="#"
+                href="/About_us"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Customers
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Analytics
+               About us 
               </Link>
             </nav>
           </SheetContent>

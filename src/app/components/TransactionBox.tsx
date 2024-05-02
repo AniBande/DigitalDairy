@@ -17,7 +17,13 @@ import { Label } from "@/components/ui/label";
 import { FarmerInput } from "./FarmerInput";
 import { PaymentStatus } from "./PaymentStatus";
 
-export function TransactionBox() {
+interface TransactionBoxProps {
+  onTransactionCreated: () => void;
+}
+
+
+
+export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [transaction, setTransaction] = React.useState({
     farmerId: "",
@@ -60,6 +66,10 @@ export function TransactionBox() {
         cost: "",
         paymentStatus: "Pending",
       });
+
+// Call the callback function after the transaction is created
+onTransactionCreated();
+
     } catch (error: any) {
       console.log("transaction failed", error.message);
       toast.error(error.message);

@@ -4,11 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import FarmerHomePage from "@/app/components/FarmerHomePage";
-import ManagerHomePage from "@/app/components/ManagerHomePage";
-import Farmer from "@/app/components/Farmer"
 import { Dashboard } from "../components/DashBoard";
 import Analytics from "../components/Analytics";
+import { Navbar } from "../components/Navbar";
+
 
 export default function HomePage() {
   const router = useRouter();
@@ -35,6 +34,7 @@ export default function HomePage() {
 
   return (
     <div>
+      <Navbar/>
       {
         role !== 'farmer' ? <Dashboard/> : <Analytics/>
       }

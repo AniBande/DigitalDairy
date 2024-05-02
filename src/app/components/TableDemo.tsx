@@ -13,86 +13,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+
+
+
+
+
 
 
 interface Transaction {
@@ -103,8 +28,13 @@ interface Transaction {
 
 }
 
+interface TableDemoProps {
+  onTransactionCreated: () => void;
+}
 
-export function TableDemo() {
+
+
+export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   // const [transaction, setTransaction] = useState({
   //   farmerId: "",
   //   managerId: "",
@@ -144,13 +74,26 @@ export function TableDemo() {
     }
   };
 
+  // const fetchusername = async (fid: string) => {
+  //   try {
+  //     const response = await axios.get(`/api/users/fetchusername?id=${fid}`);
+  //     return response.data.username; // Assuming the response contains the username
+  //   } catch (error: any) {
+  //     console.error("Error fetching username:", error.message);
+  //     toast.error("Error fetching username");
+  //     return ""; // Return empty string in case of error
+  //   }
+  // };
+
+
+
   useEffect(() => {
     getUserDetails();
   }, []);
 
   useEffect(() => {
     fetchTransactions();
-  }, [id]);
+  }, [id, onTransactionCreated]);
 
 
 
@@ -177,20 +120,20 @@ export function TableDemo() {
 
   return (
 
-    
+
     <div className="w-full rounded-lg border">
       <div className="rounded-lg  border">
         <div className="h-[626px] relative overflow-auto">
-          
-              <div className="sticky top-0 flex flex-col z-50 rounded-t-lg border  bg-background px-4 md:px-6 w-full">
-                <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">Recent Transactions</h1>
-                <p className="text-sm text-muted-foreground mx-4 mt-4">A list of your recent Transactions.</p>
-              </div>
+
+          <div className="sticky top-0 flex flex-col z-50 rounded-t-lg border  bg-background px-4 md:px-6 w-full">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">Recent Transactions</h1>
+            <p className="text-sm text-muted-foreground mx-4 mt-4">A list of your recent Transactions.</p>
+          </div>
           <Table>
             {/* <TableCaption>A list of your recent Transactions</TableCaption> */}
-            
+
             <TableHeader>
-             
+
               <TableRow>
                 <TableHead className="w-[100px]">Name</TableHead>
                 <TableHead>Quantity</TableHead>
@@ -204,8 +147,8 @@ export function TableDemo() {
               {transactions.map((transactions, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium">
-                    {/* {transactions.farmerId} */}
-                    Farmer Name
+                    {/* {fetchusername(transactions.farmerId)} */}
+                    Name
                   </TableCell>
                   <TableCell>{transactions.quantity}</TableCell>
                   <TableCell>{transactions.cost}</TableCell>
