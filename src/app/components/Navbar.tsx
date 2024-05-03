@@ -4,6 +4,7 @@ import * as React from "react";
 import { Profile } from "./Profile";
 import Logout from "./Logout";
 import { EditIcon } from "lucide-react";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 
 
@@ -44,6 +45,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { GiFarmer } from "react-icons/gi";
 
 
 
@@ -57,14 +59,14 @@ export function Navbar() {
         <header className="sticky top-0 flex h-16 z-50 items-center gap-4 border-b bg-background px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
-            href="#"
+            href="/home"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" />
+            <GiFarmer className="h-6 w-6"/>
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
-            href="/Home"
+            href="/home"
             className="text-foreground transition-colors hover:text-foreground"
           >
             Home
@@ -82,7 +84,7 @@ export function Navbar() {
             News
           </Link>
           <Link
-            href="/MLFrontend"
+            href="/milkquality"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             ML
@@ -91,7 +93,7 @@ export function Navbar() {
             href="/About_us"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            About us
+            AboutUs
           </Link>
           
         </nav>
@@ -109,13 +111,13 @@ export function Navbar() {
           <SheetContent side="left">
             <nav className="grid gap-6 text-lg font-medium">
               <Link
-                href="#"
+                href="/home"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Package2 className="h-6 w-6" />
+                <GiFarmer className="h-6 w-6"/>
                 <span className="sr-only">Acme Inc</span>
               </Link>
-              <Link href="/Home" className="hover:text-foreground">
+              <Link href="/home" className="hover:text-foreground">
                 Home
               </Link>
               <Link
@@ -131,7 +133,7 @@ export function Navbar() {
                 News
               </Link>
               <Link
-                href="/MLFrontend"
+                href="/milkquality"
                 className="text-muted-foreground hover:text-foreground"
               >
                 ML
@@ -140,7 +142,7 @@ export function Navbar() {
                 href="/About_us"
                 className="text-muted-foreground hover:text-foreground"
               >
-               About us 
+               AboutUs 
               </Link>
             </nav>
           </SheetContent>
@@ -156,6 +158,7 @@ export function Navbar() {
               />
             </div>
           </form>
+          <ThemeSwitch/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">

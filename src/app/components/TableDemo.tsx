@@ -24,7 +24,7 @@ interface Transaction {
   quantity: number;
   cost: number;
   paymentStatus: string;
-  farmerId: string;
+  farmerName:string;
 
 }
 
@@ -148,7 +148,7 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
                 <TableRow key={index}>
                   <TableCell className="font-medium">
                     {/* {fetchusername(transactions.farmerId)} */}
-                    Name
+                    {transactions.farmerName}
                   </TableCell>
                   <TableCell>{transactions.quantity}</TableCell>
                   <TableCell>{transactions.cost}</TableCell>

@@ -1,5 +1,6 @@
 import {connect} from "@/dbConfig/dbConfig";
 import Transaction from "@/models/transaction";
+import User from "@/models/usermodel";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -11,9 +12,12 @@ export async function POST(request: NextRequest){
         const {farmerId, managerId, quantity, fat, snf, cost, paymentStatus} = reqBody;
         console.log(reqBody);
 
+        const user = await User.findById(farmerId);
+        const name = user ? user.name : null;
        
         const newTransaction = new Transaction({
             farmerId, 
+            farmerName: name,
             managerId, 
             quantity, 
             fat, 

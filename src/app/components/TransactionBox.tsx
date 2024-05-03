@@ -22,7 +22,6 @@ interface TransactionBoxProps {
 }
 
 
-
 export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [transaction, setTransaction] = React.useState({
@@ -35,6 +34,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
     paymentStatus: "Pending",
   });
   const [paymentStatus, setPaymentStatus] = useState("Pending");
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [snfFatRates, setsnfFatRates] = useState([
     // Example rates for demonstration purposes
@@ -54,6 +54,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
   const onPay = async () => {
     try {
       setIsLoading(true);
+      if (!check()) return;
       const response = await axios.post("/api/users/managerHome", transaction);
       console.log("transaction success", response.data);
       toast.success("transaction success");
@@ -66,10 +67,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
         cost: "",
         paymentStatus: "Pending",
       });
-
-// Call the callback function after the transaction is created
-onTransactionCreated();
-
+      onTransactionCreated();
     } catch (error: any) {
       console.log("transaction failed", error.message);
       toast.error(error.message);
@@ -77,6 +75,20 @@ onTransactionCreated();
       setIsLoading(false);
     }
   };
+
+  const check = () => {
+    if(transaction.snf){
+      if(transaction.snf !== "1" && transaction.snf !== "2" && transaction.snf !== "3" && transaction.snf !== "4"){
+        return false;
+      }
+    }
+    if(transaction.fat){
+      if(transaction.fat !== "1" && transaction.fat !== "2" && transaction.fat !== "3" && transaction.fat !== "4"){
+        return false;
+      }
+    }
+    return true;
+  }
 
   const getUserDetails = async () => {
     try {
@@ -93,7 +105,28 @@ onTransactionCreated();
   }, []);
 
   useEffect(() => {
-    if (transaction.quantity && transaction.fat && transaction.snf) {
+    if(transaction.cost && transaction.farmerId) setButtonDisabled(false);
+    else setButtonDisabled(true);
+  }, [transaction.cost, transaction.farmerId]);
+
+  useEffect(() => {
+    if (transaction.snf) {
+      if (transaction.snf !== "1" && transaction.snf !== "2" && transaction.snf !== "3" && transaction.snf !== "4") {
+        toast.error("Please enter valid snf value (1, 2, 3, 4)");
+      }
+    }
+  }, [transaction.snf]);
+  
+  useEffect(() => {
+    if(transaction.fat){
+      if(transaction.fat !== "1" && transaction.fat !== "2" && transaction.fat !== "3" && transaction.fat !== "4"){
+        toast.error("Please enter valid fat value (1, 2, 3, 4)");
+      }
+    }
+  }, [transaction.fat]);
+
+  useEffect(() => {
+    if (transaction.quantity && transaction.fat && transaction.snf && check()) {
       calculateAmount();
     } else {
       // If any of the fields is empty, keep the cost as it is
@@ -102,6 +135,10 @@ onTransactionCreated();
   }, [transaction.quantity, transaction.fat, transaction.snf]);
 
   const handleFarmerSelect = async (username: String) => {
+    if(username === "") {
+      setTransaction({ ...transaction, farmerId: "" });
+      return;
+    }
     try {
       const response = await axios.get(
         `/api/users/farmerid?username=${username}`
@@ -202,6 +239,7 @@ onTransactionCreated();
           type="submit"
           style={{ minWidth: "120px", minHeight: "40px" }}
           onClick={onPay}
+          disabled={buttonDisabled}
         >
           {isLoading ? (
             <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
