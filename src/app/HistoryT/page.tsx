@@ -13,7 +13,7 @@ interface Transaction {
 export default function RecentTransactions() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [batchSize, setBatchSize] = useState<number>(5);
+    // const [batchSize, setBatchSize] = useState<number>(5);
     const [displayedTransactions, setDisplayedTransactions] = useState<number>(5);
     const [filterOption, setFilterOption] = useState<string>("all"); // Default filter option
 
@@ -54,9 +54,9 @@ export default function RecentTransactions() {
         return filteredTransactions;
     };
 
-    const handleLoadMore = () => {
-        setDisplayedTransactions((prev) => prev + batchSize);
-    };
+    // const handleLoadMore = () => {
+    //     setDisplayedTransactions((prev) => prev + batchSize);
+    // };
 
     const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterOption(event.target.value);
@@ -81,7 +81,7 @@ export default function RecentTransactions() {
                 ) : (
                     <div>
                         <ul>
-                            {filterTransactions().slice(0, displayedTransactions).map((transaction, index) => (
+                            {filterTransactions().map((transaction, index) => (
                                 <li key={index}>
                                     <p>Quantity: {transaction.quantity}</p>
                                     <p>Cost: {transaction.cost}</p>
@@ -90,9 +90,9 @@ export default function RecentTransactions() {
                                 </li>
                             ))}
                         </ul>
-                        {displayedTransactions < filterTransactions().length && (
+                        {/* {displayedTransactions < filterTransactions().length && (
                             <button onClick={handleLoadMore}>More</button>
-                        )}
+                        )} */}
                     </div>
                 )}
             </div>

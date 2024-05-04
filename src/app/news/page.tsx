@@ -5,6 +5,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import { Navbar } from '../components/Navbar';
 
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
@@ -82,6 +83,7 @@ export default function News() {
 
   return (
     <div>
+      <Navbar/>
       <button onClick={() => runChat(prompt)}>Generate News</button>
       {description && (
         <div>

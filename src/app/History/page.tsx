@@ -136,9 +136,7 @@ export default function History() {
 
           } else {
             return (
-              transaction.paymentStatus === selectedTab &&
-              transactionDate.toDateString() === today.toDateString()
-            );
+              transaction.paymentStatus === selectedTab );
           }
       }
     });
@@ -255,7 +253,6 @@ export default function History() {
 
                             <TableBody>
                               {filterTransactions()
-                                .slice(0, displayedTransactions)
                                 .map((transaction, index) => (
                                     <TableRow key={index}>
                                       <TableCell className="font-medium">

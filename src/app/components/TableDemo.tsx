@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -13,26 +13,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-
-
-
-
-
-
+import { RotateCcw } from "lucide-react";
 
 interface Transaction {
   quantity: number;
   cost: number;
   paymentStatus: string;
-  farmerName:string;
-
+  farmerName: string;
 }
 
 interface TableDemoProps {
   onTransactionCreated: () => void;
 }
-
-
 
 export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   // const [transaction, setTransaction] = useState({
@@ -50,7 +42,6 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   const [batchSize, setBatchSize] = useState<number>(3);
   const [displayedTransactions, setDisplayedTransactions] = useState<number>(3);
   const [id, setid] = useState<String>("ID");
-
 
   // const getUserDetails = async () => {
   //   try {
@@ -85,8 +76,6 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   //   }
   // };
 
-
-
   useEffect(() => {
     getUserDetails();
   }, []);
@@ -94,8 +83,6 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   useEffect(() => {
     fetchTransactions();
   }, [id, onTransactionCreated]);
-
-
 
   // useEffect(() => {
   //   getUserDetails();
@@ -119,21 +106,27 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   }, []);
 
   return (
-
-
     <div className="w-full rounded-lg border">
       <div className="rounded-lg  border">
         <div className="h-[626px] relative overflow-auto">
-
           <div className="sticky top-0 flex flex-col z-50 rounded-t-lg border  bg-background px-4 md:px-6 w-full">
-            <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">Recent Transactions</h1>
-            <p className="text-sm text-muted-foreground mx-4 mt-4">A list of your recent Transactions.</p>
+            <div className="flex flex-row justify-between">
+              <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">
+                Recent Transactions
+              </h1>
+              <button onClick={fetchTransactions}>
+                <RotateCcw />
+              </button>
+            </div>
+
+            <p className="text-sm text-muted-foreground mx-4 mt-4">
+              A list of your recent Transactions.
+            </p>
           </div>
           <Table>
             {/* <TableCaption>A list of your recent Transactions</TableCaption> */}
 
             <TableHeader>
-
               <TableRow>
                 <TableHead className="w-[100px]">Name</TableHead>
                 <TableHead>Quantity</TableHead>
