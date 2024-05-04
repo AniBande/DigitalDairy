@@ -67,6 +67,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
         cost: "",
         paymentStatus: "Pending",
       });
+      setPaymentStatus("Pending");
       onTransactionCreated();
     } catch (error: any) {
       console.log("transaction failed", error.message);
@@ -105,9 +106,9 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
   }, []);
 
   useEffect(() => {
-    if(transaction.cost && transaction.farmerId) setButtonDisabled(false);
+    if(transaction.cost) setButtonDisabled(false);
     else setButtonDisabled(true);
-  }, [transaction.cost, transaction.farmerId]);
+  }, [transaction.cost]);
 
   useEffect(() => {
     if (transaction.snf) {
@@ -153,7 +154,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
     try {
       setTransaction({ ...transaction, paymentStatus: paymentStatus });
       setPaymentStatus(paymentStatus);
-      console.log("Updated payment status:", paymentStatus);
+      // console.log("Updated payment status:", paymentStatus);
     } catch (error) {
       console.error("Error setting payment status:", error);
     }

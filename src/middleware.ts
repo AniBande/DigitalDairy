@@ -24,6 +24,9 @@ export const config = {
     '/profile',
     '/login',
     '/signup',
-    '/home'
+    '/home',
+    '/History',
+    '/milkquality',
+    '/About_us',
   ]
 }

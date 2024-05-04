@@ -1,25 +1,38 @@
-"use client"
-
+import React from "react";
 import { Navbar } from "../components/Navbar";
-
 
 export default function About_us() {
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      
-    <Navbar/>
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          {/* <TransactionBox/>
-          {/* <TransactionTable/> */}
-          {/* <HistoryTable/> */}
-          {/* <TableDemo/> 
-          <PendingTransactions/> */}
-          
-          <h1>About Us Page in Progress</h1>
-
+    <>
+      <Navbar />
+      <div className="py-16">
+        <div className="container m-auto px-6 md:px-12 xl:px-6">
+          <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
+            <div className="md:5/12 lg:w-5/12">
+              <img
+                src="https://tailus.io/sources/blocks/left-image/preview/images/startup.png"
+                alt="image"
+              />
+            </div>
+            <div className="md:7/12 lg:w-6/12">
+              <h2 className="text-2xl font-bold md:text-4xl">
+                React development is carried out by passionate developers
+              </h2>
+              <p className="mt-6 text-gray-600">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
+                omnis voluptatem accusantium nemo perspiciatis delectus atque
+                autem! Voluptatum tenetur beatae unde aperiam, repellat expedita
+                consequatur! Officiis id consequatur atque doloremque!
+              </p>
+              <p className="mt-4 text-gray-600">
+                Nobis minus voluptatibus pariatur dignissimos libero quaerat
+                iure expedita at? Asperiores nemo possimus nesciunt dicta veniam
+                aspernatur quam mollitia.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

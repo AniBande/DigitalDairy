@@ -38,12 +38,6 @@ export default function HomePage() {
       {
         role !== 'farmer' ? <Dashboard/> : <Analytics/>
       }
-      {/* {
-        role === 'farmer' ? <Farmer/> : <ManagerHomePage/>
-      } */}
-      {/* {
-        role === 'farmer' ? <Analytics/> : <ManagerHomePage/>
-      } */}
     </div>
   );
 }

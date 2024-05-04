@@ -21,18 +21,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   TooltipProvider,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { FarmerInput } from "@/app/components/FarmerInput";
 
 interface Transaction {
   quantity: number;
@@ -40,6 +36,7 @@ interface Transaction {
   paymentStatus: string;
   createdAt: string;
   farmerId: string;
+  farmerName: string;
   userId: string;
 }
 
@@ -51,9 +48,8 @@ export default function History() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [batchSize, setBatchSize] = useState<number>(5);
-  const [displayedTransactions, setDisplayedTransactions] = useState<number>(
-    5
-  );
+  const [displayedTransactions, setDisplayedTransactions] =
+    useState<number>(50);
   const [selectedTab, setSelectedTab] = useState<string>("all");
 
   const getUserDetails = async () => {
@@ -90,7 +86,7 @@ export default function History() {
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
-      toast.error("Error fetching transactions");
+      // toast.error("Error fetching transactions");
     } finally {
       setLoading(false);
     }
@@ -101,29 +97,50 @@ export default function History() {
     return transactions.filter((transaction) => {
       const transactionDate = new Date(transaction.createdAt);
       switch (filterOption) {
-        
         case "today":
-          return (
-            transaction.paymentStatus === selectedTab &&
-            transactionDate.toDateString() === today.toDateString()
-          );
+          if (selectedTab === "all") {
+            return transactionDate.toDateString() === today.toDateString();
+          } else {
+            return (
+              transaction.paymentStatus === selectedTab &&
+              transactionDate.toDateString() === today.toDateString()
+            );
+          }
         case "week":
           const startOfWeek = new Date(today);
           startOfWeek.setDate(today.getDate() - today.getDay());
-          return (
-            transaction.paymentStatus === selectedTab &&
+          if (selectedTab === "all") {
+           return transactionDate.toDateString() === today.toDateString()
+          } else {
+            return (
+              transaction.paymentStatus === selectedTab &&
             transactionDate >= startOfWeek
-          );
+            );
+          }
         case "month":
-          return (
-            transaction.paymentStatus === selectedTab &&
-            transactionDate.getMonth() === today.getMonth() &&
+          if (selectedTab === "all") {
+            return (transactionDate.getMonth() === today.getMonth() &&
             transactionDate.getFullYear() === today.getFullYear()
-          );
+          )
+          } else {
+            return (
+              transaction.paymentStatus === selectedTab &&
+                 transactionDate.getMonth() === today.getMonth() &&
+                 transactionDate.getFullYear() === today.getFullYear()
+            );
+          }
+
         default:
-          return transaction.paymentStatus === selectedTab;
-     
-       }
+          if (selectedTab === "all") {
+            return (transaction.paymentStatus === "Done" || transaction.paymentStatus === "Pending");
+
+          } else {
+            return (
+              transaction.paymentStatus === selectedTab &&
+              transactionDate.toDateString() === today.toDateString()
+            );
+          }
+      }
     });
   };
 
@@ -131,16 +148,23 @@ export default function History() {
     setSelectedTab(tab);
   };
 
-  const handleFilterChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterOption(event.target.value);
   };
 
-  const handleFarmerChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFarmerId(event.target.value);
+  const handleFarmerSelect = async (username: String) => {
+    if (username === "") {
+      setFarmerId("");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `/api/users/farmerid?username=${username}`
+      );
+      setFarmerId(response.data.data._id);
+    } catch (error) {
+      console.error("Error fetching farmer ID:", error);
+    }
   };
 
   return (
@@ -174,16 +198,7 @@ export default function History() {
                 </TabsList>
 
                 {userRole === "manager" && (
-                  <div>
-                    <label htmlFor="farmerId">Enter Farmer's ID:</label>
-                    <input
-                      className="mx-4"
-                      type="text"
-                      id="farmerId"
-                      value={farmerId}
-                      onChange={handleFarmerChange}
-                    />
-                  </div>
+                  <FarmerInput onFarmerSelect={handleFarmerSelect} />
                 )}
 
                 <button
@@ -199,7 +214,7 @@ export default function History() {
                     id="filter"
                     value={filterOption}
                     onChange={handleFilterChange}
-                    className="border border-black border-2"
+                    className="border-black border-2"
                   >
                     <option value="all">All</option>
                     <option value="today">Today</option>
@@ -213,69 +228,63 @@ export default function History() {
                 <Card x-chunk="dashboard-06-chunk-0">
                   <CardHeader>
                     <CardTitle>Transactions</CardTitle>
-                    <CardDescription>
-                      Manage your products and view their sales performance.
-                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Amount
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Quantity
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Created at
-                          </TableHead>
-                          <TableHead>
-                            <span className="sr-only">Actions</span>
-                          </TableHead>
-                        </TableRow>
-                      </TableHeader>
-
-                      <TableBody>
-                        {filterTransactions()
-                          .slice(0, displayedTransactions)
-                          .map((transaction, index) => (
-                            <li
-                              key={index}
-                              className="flex flex-row items-center mb-4"
-                            >
+                    <div className="w-full rounded-lg border">
+                      <div className="rounded-lg  border">
+                        <div className="h-[626px] relative overflow-auto">
+                          <Table>
+                            <TableHeader>
                               <TableRow>
-                                <TableCell className="font-medium">
-                                  {transaction.farmerId}
-                                </TableCell>
-                                <TableCell>
-                                  <Badge variant="outline">
-                                    {transaction.paymentStatus}
-                                  </Badge>
-                                </TableCell>
-                                <TableCell className="hidden md:table-cell">
-                                  {transaction.cost}
-                                </TableCell>
-                                <TableCell className="hidden md:table-cell">
-                                  {transaction.quantity}
-                                </TableCell>
-                                <TableCell className="hidden md:table-cell">
-                                  {transaction.createdAt}
-                                </TableCell>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="hidden md:table-cell">
+                                  Amount
+                                </TableHead>
+                                <TableHead className="hidden md:table-cell">
+                                  Quantity
+                                </TableHead>
+                                <TableHead className="hidden md:table-cell">
+                                  Date & Time
+                                </TableHead>
+                                <TableHead>
+                                  <span className="sr-only">Actions</span>
+                                </TableHead>
                               </TableRow>
-                            </li>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="text-xs text-muted-foreground">
-                      Showing <strong>1-10</strong> of <strong>32</strong>{" "}
-                      products
+                            </TableHeader>
+
+                            <TableBody>
+                              {filterTransactions()
+                                .slice(0, displayedTransactions)
+                                .map((transaction, index) => (
+                                    <TableRow key={index}>
+                                      <TableCell className="font-medium">
+                                        {transaction.farmerName}
+                                      </TableCell>
+                                      <TableCell>
+                                        <Badge variant="outline">
+                                          {transaction.paymentStatus}
+                                        </Badge>
+                                      </TableCell>
+                                      <TableCell>
+                                        {transaction.cost}
+                                      </TableCell>
+                                      <TableCell>
+                                        {transaction.quantity}
+                                      </TableCell>
+                                      <TableCell>
+                                        {new Date(
+                                          transaction.createdAt
+                                        ).toLocaleString()}
+                                      </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </div>
                     </div>
-                  </CardFooter>
+                  </CardContent>
                 </Card>
               </TabsContent>
             </Tabs>

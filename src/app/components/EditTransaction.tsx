@@ -23,12 +23,13 @@ interface EditTransactionProps {
     // Quantity: number;
     // Cost: number;
     // PaymentStatus: string;
-  _id: string; 
+    _id: string;
 
     farmerId: string;
-  quantity: number;
-  cost: number;
-  paymentStatus: string;
+    farmerName: string;
+    quantity: number;
+    cost: number;
+    paymentStatus: string;
   };
 }
 
@@ -55,25 +56,26 @@ export function EditTransaction({ trans }: EditTransactionProps) {
     <Dialog>
       <DialogTrigger asChild>
         <button>
-          <EditIcon/>
+          <EditIcon />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogClose ref={dialogCloseRef}/>
+          <DialogClose ref={dialogCloseRef} />
           <DialogTitle>Edit Transaction</DialogTitle>
           <DialogDescription>
-            Make changes in the Transaction here. Click pay to change status to "done".
+            Make changes in the Transaction here. Click pay to change status to
+            "Done".
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="ID" className="text-right">
+            <Label htmlFor="Name" className="text-right">
               ID
             </Label>
             <Input
-              id="ID"
-              defaultValue={trans.farmerId}
+              id="Name"
+              defaultValue={trans.farmerName}
               className="col-span-3"
               disabled
             />
@@ -113,7 +115,11 @@ export function EditTransaction({ trans }: EditTransactionProps) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" style={{ minWidth: "120px", minHeight: "40px" }} onClick={pay}>
+          <Button
+            type="submit"
+            style={{ minWidth: "120px", minHeight: "40px" }}
+            onClick={pay}
+          >
             {isLoading ? (
               <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
             ) : (

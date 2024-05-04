@@ -16,28 +16,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit2Icon, EditIcon } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 
 interface Transaction {
   _id: string; 
   farmerId: string;
+  farmerName: string;
   quantity: number;
   cost: number;
   paymentStatus: string;
+  createdAt: string;
 }
 
 // Define the interface for the Transaction object
 interface trans {
-  // ID: string;
-  // Quantity: number;
-  // Cost: number;
-  // PaymentStatus: string;
   _id: string; 
   managerId: string;
   farmerId: string;
   quantity: number;
   cost: number;
   paymentStatus: string;
+  createdAt: string;
 }
 
 
@@ -102,9 +101,9 @@ export default function PendingTransactions() {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row justify-between">
         <CardTitle>Pending Transactions</CardTitle>
-        <button onClick={fetchTransactions}><Edit2Icon/></button>
+        <button onClick={fetchTransactions}><RotateCcw /></button>
       </CardHeader>
       <CardContent className="grid gap-8">
        
@@ -112,9 +111,9 @@ export default function PendingTransactions() {
           <div key={index} className="flex items-center gap-4">
             <EditTransaction trans={transaction}/>
             <div className="grid gap-1">
-              <p className="text-sm font-medium leading-none">{transaction.farmerId}</p>
+              <p className="text-sm font-medium leading-none">{transaction.farmerName}</p>
               {/* <p className="text-sm text-muted-foreground">Transaction Date: {transaction.transactionDate}</p> */}
-              <p className="text-sm text-muted-foreground">Transaction Date:</p>
+              <p className="text-sm text-muted-foreground">{new Date(transaction.createdAt).toLocaleString()}</p>
             </div>
             <div className="ml-auto font-medium">Rs {transaction.cost}</div>
           </div>

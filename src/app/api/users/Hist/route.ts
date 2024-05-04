@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
                 throw new Error("Both 'id' and 'farmerId' parameters are required.");
             }
 
-            const transactions = await Transaction.find({ managerId: userId, farmerId: farmerId });
+            const transactions = await Transaction.find({ managerId: userId, farmerId: farmerId }).sort({ createdAt: -1});
 
             if (!transactions) {
                 console.log("No transactions found");
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
                 throw new Error("farmerId' parameter is required.");
             }
 
-            const transactions = await Transaction.find({ farmerId: userId });
+            const transactions = await Transaction.find({ farmerId: userId }).sort({ createdAt: -1});
 
             if (!transactions) {
                 console.log("No transactions found");

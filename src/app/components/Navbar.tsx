@@ -67,7 +67,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/home"
-            className="text-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Home
           </Link>
@@ -77,6 +77,7 @@ export function Navbar() {
           >
             History
           </Link>
+
           <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
