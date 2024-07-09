@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
@@ -19,23 +19,18 @@ import { EditIcon } from "lucide-react";
 
 interface EditTransactionProps {
   trans: {
-    // ID: string;
-    // Quantity: number;
-    // Cost: number;
-    // PaymentStatus: string;
     _id: string;
-
     farmerId: string;
     farmerName: string;
     quantity: number;
     cost: number;
     paymentStatus: string;
   };
+  onPay: () => void;
 }
 
-export function EditTransaction({ trans }: EditTransactionProps) {
+export function EditTransaction({ trans, onPay }: EditTransactionProps) {
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const pay = async () => {
@@ -44,6 +39,7 @@ export function EditTransaction({ trans }: EditTransactionProps) {
       const res = await axios.post("/api/users/editTransaction", trans);
       toast.success("Transaction updated successfully");
       dialogCloseRef.current?.click();
+      onPay();
     } catch (error: any) {
       console.error("Error updating Transaction:", error);
       toast.error(error.response.data.error);
@@ -64,8 +60,7 @@ export function EditTransaction({ trans }: EditTransactionProps) {
           <DialogClose ref={dialogCloseRef} />
           <DialogTitle>Edit Transaction</DialogTitle>
           <DialogDescription>
-            Make changes in the Transaction here. Click pay to change status to
-            "Done".
+            Make changes in the Transaction here. Click pay to change status to "Done".
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -121,7 +116,7 @@ export function EditTransaction({ trans }: EditTransactionProps) {
             onClick={pay}
           >
             {isLoading ? (
-              <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
+              <div className="w-5 h-5 border-t-2 border-b-2 rounded-full animate-spin" />
             ) : (
               "Pay"
             )}

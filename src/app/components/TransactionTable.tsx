@@ -125,7 +125,7 @@ export default function TransactionTable() {
                               </TableCell>
 
                               <TableCell className="">
-                                <Badge className="" variant="outline">
+                                <Badge variant={transaction.paymentStatus === 'Done' ? 'green' : transaction.paymentStatus === 'Pending' ? 'yellow' : 'default'}>
                                   {transaction.paymentStatus}
                                 </Badge>
                               </TableCell>

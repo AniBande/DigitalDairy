@@ -29,6 +29,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { FarmerInput } from "@/app/components/FarmerInput";
+import { Button } from "@/components/ui/button";
+import { ListFilter } from "lucide-react";
 
 interface Transaction {
   quantity: number;
@@ -78,19 +80,28 @@ export default function History() {
 
       if (userRole === "manager") {
         apiUrl += `?userId=${userId}&farmerId=${farmerId}&userRole=${userRole}`;
-      } else {
+      }
+      else {
         apiUrl += `?userId=${userId}&userRole=${userRole}`;
       }
+
+      // if (userRole === "manager" && farmerId === "") {
+      //   apiUrl += `?userId=${userId}&userRole=${userRole}`;
+      // } else {
+      //   apiUrl += `?userId=${userId}&farmerId=${farmerId}&userRole=${userRole}`;
+
+      // }
 
       const response = await axios.get(apiUrl);
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
-      // toast.error("Error fetching transactions");
+      toast.error("Error fetching transactions");
     } finally {
       setLoading(false);
     }
   };
+
 
   const filterTransactions = () => {
     const today = new Date();
@@ -109,24 +120,28 @@ export default function History() {
         case "week":
           const startOfWeek = new Date(today);
           startOfWeek.setDate(today.getDate() - today.getDay());
+          const endOfWeek = new Date(today);
+          endOfWeek.setDate(startOfWeek.getDate() + 6); // Set end of week to 6 days after start of week
           if (selectedTab === "all") {
-           return transactionDate.toDateString() === today.toDateString()
+            return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
           } else {
             return (
               transaction.paymentStatus === selectedTab &&
-            transactionDate >= startOfWeek
+              transactionDate >= startOfWeek &&
+              transactionDate <= endOfWeek
             );
           }
+
         case "month":
           if (selectedTab === "all") {
             return (transactionDate.getMonth() === today.getMonth() &&
-            transactionDate.getFullYear() === today.getFullYear()
-          )
+              transactionDate.getFullYear() === today.getFullYear()
+            )
           } else {
             return (
               transaction.paymentStatus === selectedTab &&
-                 transactionDate.getMonth() === today.getMonth() &&
-                 transactionDate.getFullYear() === today.getFullYear()
+              transactionDate.getMonth() === today.getMonth() &&
+              transactionDate.getFullYear() === today.getFullYear()
             );
           }
 
@@ -136,7 +151,7 @@ export default function History() {
 
           } else {
             return (
-              transaction.paymentStatus === selectedTab );
+              transaction.paymentStatus === selectedTab);
           }
       }
     });
@@ -196,18 +211,23 @@ export default function History() {
                 </TabsList>
 
                 {userRole === "manager" && (
-                  <FarmerInput onFarmerSelect={handleFarmerSelect} />
+                  <div className="mx-4">
+                    <FarmerInput onFarmerSelect={handleFarmerSelect} />
+                  </div>
                 )}
 
-                <button
+                {/* <button
                   onClick={fetchTransactions}
                   className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                 >
                   Fetch
-                </button>
+                </button> */}
 
                 <div className="ml-auto flex items-center gap-2">
-                  <Label htmlFor="name">Name</Label>
+                  <ListFilter className="h-3.5 w-3.5" />
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                    Filter
+                  </span>
                   <select
                     id="filter"
                     value={filterOption}
@@ -219,6 +239,36 @@ export default function History() {
                     <option value="week">This Week</option>
                     <option value="month">This Month</option>
                   </select>
+
+
+                  {/* <Button variant="outline" size="sm" className="h-8 gap-1">
+                        <ListFilter className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                          Filter
+                        </span>
+                      </Button> */}
+
+                  {/* <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="h-8 gap-1">
+                        <ListFilter className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                          Filter
+                        </span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuCheckboxItem checked>
+                        Active
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Archived
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu> */}
                 </div>
               </div>
 
@@ -254,27 +304,28 @@ export default function History() {
                             <TableBody>
                               {filterTransactions()
                                 .map((transaction, index) => (
-                                    <TableRow key={index}>
-                                      <TableCell className="font-medium">
-                                        {transaction.farmerName}
-                                      </TableCell>
-                                      <TableCell>
-                                        <Badge variant="outline">
-                                          {transaction.paymentStatus}
-                                        </Badge>
-                                      </TableCell>
-                                      <TableCell>
-                                        {transaction.cost}
-                                      </TableCell>
-                                      <TableCell>
-                                        {transaction.quantity}
-                                      </TableCell>
-                                      <TableCell>
-                                        {new Date(
-                                          transaction.createdAt
-                                        ).toLocaleString()}
-                                      </TableCell>
-                                    </TableRow>
+                                  <TableRow key={index}>
+                                    <TableCell className="font-medium">
+                                      {transaction.farmerName}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant={transaction.paymentStatus === 'Done' ? 'green' : transaction.paymentStatus === 'Pending' ? 'yellow' : 'default'}>
+                                        {transaction.paymentStatus}
+                                      </Badge>
+                                    </TableCell>
+
+                                    <TableCell>
+                                      {transaction.cost}
+                                    </TableCell>
+                                    <TableCell>
+                                      {transaction.quantity}
+                                    </TableCell>
+                                    <TableCell>
+                                      {new Date(
+                                        transaction.createdAt
+                                      ).toLocaleString()}
+                                    </TableCell>
+                                  </TableRow>
                                 ))}
                             </TableBody>
                           </Table>

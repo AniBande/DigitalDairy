@@ -17,12 +17,12 @@ import { Label } from "@/components/ui/label";
 import { FarmerInput } from "./FarmerInput";
 import { PaymentStatus } from "./PaymentStatus";
 
-interface TransactionBoxProps {
-  onTransactionCreated: () => void;
+interface OnPaymentProps {
+  onPay: () => void;
 }
 
 
-export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
+export function TransactionBox({onPay} : OnPaymentProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [transaction, setTransaction] = React.useState({
     farmerId: "",
@@ -43,7 +43,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
     [12, 14, 16, 18],
     [13, 15, 17, 19],
   ]);
-
+ 
   const calculateAmount = () => {
     const { snf, fat, quantity } = transaction;
     const rate = snfFatRates[Number(snf) - 1][Number(fat) - 1]; // Adjust indices since array is 0-based
@@ -51,7 +51,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
     setTransaction({ ...transaction, cost: amount.toString() }); // Convert amount back to string
   };
 
-  const onPay = async () => {
+  const onPayment = async () => {
     try {
       setIsLoading(true);
       if (!check()) return;
@@ -68,7 +68,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
         paymentStatus: "Pending",
       });
       setPaymentStatus("Pending");
-      onTransactionCreated();
+      onPay();
     } catch (error: any) {
       console.log("transaction failed", error.message);
       toast.error(error.message);
@@ -239,7 +239,7 @@ export function TransactionBox({ onTransactionCreated }: TransactionBoxProps) {
         <Button
           type="submit"
           style={{ minWidth: "120px", minHeight: "40px" }}
-          onClick={onPay}
+          onClick={onPayment}
           disabled={buttonDisabled}
         >
           {isLoading ? (

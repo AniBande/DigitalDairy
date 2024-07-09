@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,forwardRef} from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import {
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/table";
 
 import { RotateCcw } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface Transaction {
   quantity: number;
@@ -22,11 +24,12 @@ interface Transaction {
   farmerName: string;
 }
 
-interface TableDemoProps {
-  onTransactionCreated: () => void;
+interface RecentTransactionsProps {
+  onPay: () => void;
 }
 
-export function TableDemo({ onTransactionCreated }: TableDemoProps) {
+const TableDemo = forwardRef<HTMLButtonElement, RecentTransactionsProps>(
+  ({ onPay }, ref) => {
   // const [transaction, setTransaction] = useState({
   //   farmerId: "",
   //   managerId: "",
@@ -76,30 +79,38 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
   //   }
   // };
 
-  useEffect(() => {
-    getUserDetails();
-  }, []);
-
-  useEffect(() => {
-    fetchTransactions();
-  }, [id, onTransactionCreated]);
-
   // useEffect(() => {
   //   getUserDetails();
   // }, []);
 
+  // useEffect(() => {
+  //   fetchTransactions();
+  // }, [id, onTransactionCreated]);
+
+  // // useEffect(() => {
+  // //   getUserDetails();
+  // // }, []);
+
   const fetchTransactions = async () => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const response = await axios.get(`/api/users/recentTransaction`);
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
       toast.error("Error fetching transactions");
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [id]);
 
   useEffect(() => {
     fetchTransactions();
@@ -107,55 +118,61 @@ export function TableDemo({ onTransactionCreated }: TableDemoProps) {
 
   return (
     <div className="w-full rounded-lg border">
-      <div className="rounded-lg  border">
-        <div className="h-[626px] relative overflow-auto">
-          <div className="sticky top-0 flex flex-col z-50 rounded-t-lg border  bg-background px-4 md:px-6 w-full">
-            <div className="flex flex-row justify-between">
-              <h1 className="text-2xl font-semibold leading-none tracking-tight mx-4 mt-4">
-                Recent Transactions
-              </h1>
-              <button onClick={fetchTransactions}>
-                <RotateCcw />
-              </button>
+
+      <Card>
+        <CardHeader className="flex flex-row justify-between">
+          <div >
+            <CardTitle>Recent Transactions</CardTitle>
+
+            <CardDescription className="mt-2">A list of your recent Transactions.</CardDescription>
+          </div>
+          <button onClick={fetchTransactions} ref={ref}> <RotateCcw /> </button>
+        </CardHeader>
+        <CardContent className="grid gap-8">
+
+          <Table>
+            <TableCaption></TableCaption>
+            <div className="max-h-[450px] overflow-auto">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Name</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>Cost</TableHead>
+                  <TableHead className="text-right">Status</TableHead>
+                </TableRow>
+              </TableHeader>
             </div>
 
-            <p className="text-sm text-muted-foreground mx-4 mt-4">
-              A list of your recent Transactions.
-            </p>
-          </div>
-          <Table>
-            {/* <TableCaption>A list of your recent Transactions</TableCaption> */}
+            <div className="max-h-[450px] overflow-auto ">
+              <TableBody>
+                {transactions.map((transaction, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">
+                      {transaction.farmerName}
+                    </TableCell>
+                    <TableCell>{transaction.quantity}</TableCell>
+                    <TableCell>{transaction.cost}</TableCell>
+                    <TableCell className="text-right">
+                    <Badge variant={transaction.paymentStatus === 'Done' ? 'green' : transaction.paymentStatus === 'Pending' ? 'yellow' : 'default'}>
+                                        {transaction.paymentStatus}
+                                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </div>
 
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Cost</TableHead>
-                <TableHead className="text-right">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {/* <ScrollArea className="h-72 w-48 rounded-md border"> */}
-              {/* <div className="max-h-[400px] overflow-auto"> */}
-              {transactions.map((transactions, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">
-                    {/* {fetchusername(transactions.farmerId)} */}
-                    {transactions.farmerName}
-                  </TableCell>
-                  <TableCell>{transactions.quantity}</TableCell>
-                  <TableCell>{transactions.cost}</TableCell>
-                  <TableCell className="text-right">
-                    {transactions.paymentStatus}
-                  </TableCell>
-                </TableRow>
-              ))}
-              {/* </div> */}
-              {/* </ScrollArea> */}
-            </TableBody>
+
           </Table>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
+);
+
+TableDemo.displayName = "TableDemo";
+
+export default TableDemo;
+
+

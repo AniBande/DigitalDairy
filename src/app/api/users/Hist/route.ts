@@ -14,11 +14,20 @@ export async function GET(request: NextRequest) {
             const userId = url.searchParams.get('userId');
             const farmerId = url.searchParams.get('farmerId');
 
-            if (!userId || !farmerId) {
-                throw new Error("Both 'id' and 'farmerId' parameters are required.");
+            if (!userId ) {
+                throw new Error(" 'id' parameter is required.");
             }
 
-            const transactions = await Transaction.find({ managerId: userId, farmerId: farmerId }).sort({ createdAt: -1});
+           // let transactions = await Transaction.find({ managerId: userId }).sort({ createdAt: -1});
+           let transactions;
+            if(farmerId === ""){
+                transactions = await Transaction.find({ managerId: userId }).sort({ createdAt: -1});
+            }
+            else{
+                 transactions = await Transaction.find({ managerId: userId, farmerId: farmerId }).sort({ createdAt: -1});
+            }
+            
+
 
             if (!transactions) {
                 console.log("No transactions found");

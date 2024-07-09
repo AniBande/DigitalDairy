@@ -94,7 +94,7 @@ export function Navbar() {
             href="/About_us"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            AboutUs
+            About Us
           </Link>
           
         </nav>
@@ -143,7 +143,7 @@ export function Navbar() {
                 href="/About_us"
                 className="text-muted-foreground hover:text-foreground"
               >
-               AboutUs 
+               About Us 
               </Link>
             </nav>
           </SheetContent>
