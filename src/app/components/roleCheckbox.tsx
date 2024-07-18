@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const RoleCheckbox = ({ onCheckboxChange, selectedRole }) => {
+const RoleCheckbox = ({ onCheckboxChange, selectedRole }:any) => {
   return (
     <div className="flex gap-3">
       <div className="form-control">
