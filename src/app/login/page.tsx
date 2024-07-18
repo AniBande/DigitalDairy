@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Input } from "@/components/ui/input"
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,9 +41,11 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-6 py-12 lg:px-8 bg-white">
-      <img
-        src="https://images.pexels.com/photos/254178/pexels-photo-254178.jpeg?cs=srgb&dl=pexels-andrey-niqi-254178.jpg&fm=jpg"
+      <Image
+        src="/bg-image.jpg"
         alt="bg-image"
+        width={900}
+        height={900}
         className="absolute inset-0 w-full h-full object-cover "
       />
       <div

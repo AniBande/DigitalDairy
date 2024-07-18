@@ -2,7 +2,6 @@
 import { Navbar } from "../components/Navbar";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -61,7 +60,7 @@ export default function History() {
 
   useEffect(() => {
     fetchTransactions();
-  }, [farmerId, userRole, userId]);
+  },[farmerId, userRole, userId]);
 
   const fetchTransactions = async () => {
     try {

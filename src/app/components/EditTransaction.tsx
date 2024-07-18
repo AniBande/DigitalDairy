@@ -60,7 +60,7 @@ export function EditTransaction({ trans, onPay }: EditTransactionProps) {
           <DialogClose ref={dialogCloseRef} />
           <DialogTitle>Edit Transaction</DialogTitle>
           <DialogDescription>
-            Make changes in the Transaction here. Click pay to change status to "Done".
+            {`Make changes in the Transaction here. Click pay to change status to "Done".`}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
