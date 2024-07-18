@@ -14,8 +14,8 @@ export default function Logout() {
       toast.success("Logout successful");
       router.push("/login");
     } catch (error: any) {
-      console.log(error.message);
-      toast.error(error.message);
+      // console.log(error.message);
+      // toast.error(error.message);
     }
   };
 

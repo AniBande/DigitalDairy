@@ -37,7 +37,7 @@ export function FarmerInput({ onFarmerSelect }: { onFarmerSelect: (farmerId: str
       setFarmers(response.data.farmers);
     } catch (error) {
       console.error("Error fetching farmers:", error);
-      toast.error("Error fetching all farmers");
+      // toast.error("Error fetching all farmers");
     }
   }
 
@@ -70,9 +70,9 @@ export function FarmerInput({ onFarmerSelect }: { onFarmerSelect: (farmerId: str
         <Command className="rounded-lg border shadow-md">
           <CommandInput placeholder="Search a farmer" />
           <CommandList>
-            {farmers.length === 0 && (
+            {/* {farmers.length === 0 && (
               <CommandEmpty>No results found.</CommandEmpty>
-            )}
+            )} */}<CommandEmpty>No results found.</CommandEmpty>
 
             <CommandGroup heading="Farmers">
               {farmers.map((farmer) => 
@@ -87,8 +87,6 @@ export function FarmerInput({ onFarmerSelect }: { onFarmerSelect: (farmerId: str
                       value === farmer.username ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {/* <User className="mr-2 h-4 w-4" />
-                  <span>{farmer.username}</span> */}
                   {farmer.username}
                 </CommandItem>
               )}

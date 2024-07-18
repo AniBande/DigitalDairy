@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import RoleCheckbox from "../components/roleCheckbox";
+import { Input } from "@/components/ui/input"
 
-// Signup page
 export default function SignupPage() {
   const router = useRouter();
   const [user, setUser] = React.useState({
@@ -27,12 +27,12 @@ export default function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("Signup success", response.data);
+      // console.log("Signup success", response.data);
       router.push("/login");
     } catch (error: any) {
-      console.log("Signup failed", error.message);
+      // console.log("Signup failed", error.message);
 
-      toast.error(error.message);
+      // toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ export default function SignupPage() {
         <label htmlFor="username" className="text-white">
           Username
         </label>
-        <input
+        <Input
           className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black w-full"
           id="username"
           type="text"
@@ -81,7 +81,7 @@ export default function SignupPage() {
         <label htmlFor="email" className="text-white">
           Email
         </label>
-        <input
+        <Input
           className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black w-full"
           id="email"
           type="text"
@@ -93,7 +93,7 @@ export default function SignupPage() {
         <label htmlFor="password" className="text-white">
           Password
         </label>
-        <input
+        <Input
           className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black w-full"
           id="password"
           type="password"
@@ -102,10 +102,10 @@ export default function SignupPage() {
           placeholder="Password"
         />
 
-        <label htmlFor="contactNumber" className="text-white">
+        <label htmlFor="contactNumbeI" className="text-white">
           Contact Number
         </label>
-        <input
+        <Input
           className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black w-full"
           id="contactNumber"
           type="text"

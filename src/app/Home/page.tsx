@@ -1,26 +1,22 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Dashboard } from "../components/DashBoard";
-import Analytics from "../components/Analytics";
+import { ManagerPage } from "../components/ManagerPage";
+import FarmerPage from "../components/FarmerPage";
 import { Navbar } from "../components/Navbar";
 
 
 export default function HomePage() {
-  const router = useRouter();
   const [role, setRole] = useState(null);
 
   const getUserDetails = async () => {
     try {
       const res = await axios.get("/api/users/me");
-      console.log(res.data);
       setRole(res.data.data.role);
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details. Please try again.");
+      // toast.error("Error fetching user details. Please try again.");
     }
   };
 
@@ -36,7 +32,7 @@ export default function HomePage() {
     <div>
       <Navbar/>
       {
-        role !== 'farmer' ? <Dashboard/> : <Analytics/>
+        role !== 'farmer' ? <ManagerPage/> : <FarmerPage/>
       }
     </div>
   );

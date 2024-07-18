@@ -37,19 +37,16 @@ interface Transaction {
 export default function TransactionTable() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [batchSize, setBatchSize] = useState<number>(5);
-  const [displayedTransactions, setDisplayedTransactions] = useState<number>(3);
   const [id, setid] = useState<String>("ID");
 
   const getUserDetails = async () => {
     try {
       const res = await axios.get("/api/users/me");
-      console.log("01");
-      console.log(res.data);
+      // console.log(res.data);
       setid(res.data.data._id);
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details. Please try again.");
+      // toast.error("Error fetching user details. Please try again.");
     }
   };
 
@@ -61,15 +58,19 @@ export default function TransactionTable() {
     fetchTransactions();
   }, [id]);
 
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   const fetchTransactions = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/users/recentT?id=${id}`);
-      console.log("response got");
+      // console.log("response got");
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
-      toast.error("Error fetching transactions");
+      // toast.error("Error fetching transactions");
     } finally {
       setLoading(false);
     }
@@ -133,8 +134,6 @@ export default function TransactionTable() {
                               <TableCell className="">
                                 Rs {transaction.cost}
                               </TableCell>
-
-                              {/* <TableCell className="text-right">$250.00</TableCell> */}
                             </TableRow>
                           ))}
                       </TableBody>

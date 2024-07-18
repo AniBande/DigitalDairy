@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
     try {
        
         const farmers = await User.find({ role: "farmer" });
-        console.log("All farmers");
         return NextResponse.json({
             farmers,
             success: true

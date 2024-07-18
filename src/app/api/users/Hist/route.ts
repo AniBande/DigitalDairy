@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
     try {
         const url = new URL(request.url);
         const userRole = url.searchParams.get('userRole');
-        let userId, farmerId; 
 
         if (userRole === "manager") {
             const userId = url.searchParams.get('userId');
@@ -30,12 +29,12 @@ export async function GET(request: NextRequest) {
 
 
             if (!transactions) {
-                console.log("No transactions found");
+                // console.log("No transactions found");
                 return NextResponse.json({ message: "No transactions found", success: false });
             }
 
-            console.log("manager-Farmer transactions found");
-            console.log(transactions);
+            // console.log("manager-Farmer transactions found");
+            // console.log(transactions);
 
             return NextResponse.json({
                 transactions,
@@ -53,12 +52,12 @@ export async function GET(request: NextRequest) {
             const transactions = await Transaction.find({ farmerId: userId }).sort({ createdAt: -1});
 
             if (!transactions) {
-                console.log("No transactions found");
+                // console.log("No transactions found");
                 return NextResponse.json({ message: "No transactions found", success: false });
             }
 
-            console.log("Farmer transactions found");
-            console.log(transactions);
+            // console.log("Farmer transactions found");
+            // console.log(transactions);
 
             return NextResponse.json({
                 transactions,

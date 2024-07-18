@@ -10,7 +10,7 @@ export async function POST(request: NextRequest){
     try {
         const reqBody = await request.json()
         const {farmerId, managerId, quantity, fat, snf, cost, paymentStatus} = reqBody;
-        console.log(reqBody);
+        // console.log(reqBody);
 
         const user = await User.findById(farmerId);
         const name = user ? user.name : null;
@@ -26,24 +26,17 @@ export async function POST(request: NextRequest){
             paymentStatus
         })
 
-        // const savedTransaction = await newTransaction.save()
-        // console.log("Hello");
-
         try {
-            // Attempt to save the transaction
             const savedTransaction = await newTransaction.save();
-            console.log("Transaction saved successfully:", savedTransaction);
-            // Return response with saved transaction details
+            // console.log("Transaction saved successfully:", savedTransaction);
         } catch (error) {
             console.error("Error saving transaction:", error);
-            // Return response with error message
         }
         
 
         return NextResponse.json({
             message: "Transaction created successfully",
             success: true,
-           // savedTransaction
         })
 
     } catch (error: any) {

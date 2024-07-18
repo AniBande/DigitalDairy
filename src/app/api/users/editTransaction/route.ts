@@ -7,13 +7,7 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { _id, farmerId, quantity, cost, paymentStatus } = reqBody;
-
-    console.log(_id);
-    console.log(farmerId);
-    console.log(quantity);
-    console.log(cost);
-    console.log(paymentStatus);
+    const { _id } = reqBody;
 
     // Find the transaction with the given parameters
     const transaction = await Transaction.findOne({ _id:_id});

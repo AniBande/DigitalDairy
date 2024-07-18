@@ -36,7 +36,7 @@ export function Profile() {
       setUser(res.data.data);
     } catch (error: any) {
       console.error("Error fetching user details:", error);
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
 
@@ -48,7 +48,7 @@ export function Profile() {
       dialogCloseRef.current?.click();
     } catch (error: any) {
       console.error("Error updating profile:", error);
-      toast.error(error.response.data.error);
+      // toast.error(error.response.data.error);
     } finally {
       setIsLoading(false);
     }

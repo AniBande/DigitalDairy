@@ -42,7 +42,7 @@ export function EditTransaction({ trans, onPay }: EditTransactionProps) {
       onPay();
     } catch (error: any) {
       console.error("Error updating Transaction:", error);
-      toast.error(error.response.data.error);
+      // toast.error(error.response.data.error);
     } finally {
       setIsLoading(false);
     }
@@ -112,7 +112,7 @@ export function EditTransaction({ trans, onPay }: EditTransactionProps) {
         <DialogFooter>
           <Button
             type="submit"
-            style={{ minWidth: "120px", minHeight: "40px" }}
+            style={{ minWidth: "120px", minHeight: "40px", color: "white" }}
             onClick={pay}
           >
             {isLoading ? (

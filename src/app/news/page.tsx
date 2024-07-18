@@ -59,7 +59,7 @@ export default function News() {
     const response = result.response;
     const text = await response.text();
     setXyz(text);
-    console.log(text);
+    // console.log(text);
   }
 
   useEffect(() => {

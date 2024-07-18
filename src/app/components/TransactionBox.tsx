@@ -16,13 +16,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FarmerInput } from "./FarmerInput";
 import { PaymentStatus } from "./PaymentStatus";
+import { useGetUser } from "@/store/useGetUser";
 
 interface OnPaymentProps {
   onPay: () => void;
 }
 
-
 export function TransactionBox({onPay} : OnPaymentProps) {
+  const { user } = useGetUser();
   const [isLoading, setIsLoading] = useState(false);
   const [transaction, setTransaction] = React.useState({
     farmerId: "",
@@ -56,7 +57,7 @@ export function TransactionBox({onPay} : OnPaymentProps) {
       setIsLoading(true);
       if (!check()) return;
       const response = await axios.post("/api/users/managerHome", transaction);
-      console.log("transaction success", response.data);
+      // console.log("transaction success", response.data);
       toast.success("transaction success");
       setTransaction({
         ... transaction, 
@@ -70,8 +71,8 @@ export function TransactionBox({onPay} : OnPaymentProps) {
       setPaymentStatus("Pending");
       onPay();
     } catch (error: any) {
-      console.log("transaction failed", error.message);
-      toast.error(error.message);
+      // console.log("transaction failed", error.message);
+      // toast.error(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +98,7 @@ export function TransactionBox({onPay} : OnPaymentProps) {
       setTransaction({ ...transaction, managerId: res.data.data._id });
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details. Please try again.");
+      // toast.error("Error fetching user details. Please try again.");
     }
   };
 
@@ -154,7 +155,6 @@ export function TransactionBox({onPay} : OnPaymentProps) {
     try {
       setTransaction({ ...transaction, paymentStatus: paymentStatus });
       setPaymentStatus(paymentStatus);
-      // console.log("Updated payment status:", paymentStatus);
     } catch (error) {
       console.error("Error setting payment status:", error);
     }
@@ -172,7 +172,6 @@ export function TransactionBox({onPay} : OnPaymentProps) {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Name</Label>
               <FarmerInput onFarmerSelect={handleFarmerSelect} />
-              {/* <FarmerInput/> */}
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="quantity">Quntity</Label>
@@ -238,7 +237,7 @@ export function TransactionBox({onPay} : OnPaymentProps) {
       <CardFooter className="flex flex-row-reverse">
         <Button
           type="submit"
-          style={{ minWidth: "120px", minHeight: "40px" }}
+          style={{ minWidth: "120px", minHeight: "40px", color: "white"}}
           onClick={onPayment}
           disabled={buttonDisabled}
         >

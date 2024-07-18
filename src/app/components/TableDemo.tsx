@@ -7,7 +7,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -30,66 +29,22 @@ interface RecentTransactionsProps {
 
 const TableDemo = forwardRef<HTMLButtonElement, RecentTransactionsProps>(
   ({ onPay }, ref) => {
-  // const [transaction, setTransaction] = useState({
-  //   farmerId: "",
-  //   managerId: "",
-  //   quantity: "",
-  //   fat: "",
-  //   snf: "",
-  //   cost: "",
-  //   paymentStatus: "Pending",
-  // });
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [batchSize, setBatchSize] = useState<number>(3);
-  const [displayedTransactions, setDisplayedTransactions] = useState<number>(3);
   const [id, setid] = useState<String>("ID");
-
-  // const getUserDetails = async () => {
-  //   try {
-  //     const res = await axios.get("/api/users/me");
-  //     setTransaction({ ...transaction, managerId: res.data.data._id });
-  //   } catch (error) {
-  //     console.error("Error fetching user details:", error);
-  //     toast.error("Error fetching user details. Please try again.");
-  //   }
-  // };
 
   const getUserDetails = async () => {
     try {
       const res = await axios.get("/api/users/me");
-      console.log("01");
-      console.log(res.data);
+      // console.log("01");
+      // console.log(res.data);
       setid(res.data.data._id);
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details. Please try again.");
+      // toast.error("Error fetching user details. Please try again.");
     }
   };
-
-  // const fetchusername = async (fid: string) => {
-  //   try {
-  //     const response = await axios.get(`/api/users/fetchusername?id=${fid}`);
-  //     return response.data.username; // Assuming the response contains the username
-  //   } catch (error: any) {
-  //     console.error("Error fetching username:", error.message);
-  //     toast.error("Error fetching username");
-  //     return ""; // Return empty string in case of error
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getUserDetails();
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchTransactions();
-  // }, [id, onTransactionCreated]);
-
-  // // useEffect(() => {
-  // //   getUserDetails();
-  // // }, []);
 
   const fetchTransactions = async () => {
     try {
@@ -98,7 +53,7 @@ const TableDemo = forwardRef<HTMLButtonElement, RecentTransactionsProps>(
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
-      toast.error("Error fetching transactions");
+      // toast.error("Error fetching transactions");
     } finally {
       setLoading(false);
     }
@@ -161,8 +116,6 @@ const TableDemo = forwardRef<HTMLButtonElement, RecentTransactionsProps>(
                 ))}
               </TableBody>
             </div>
-
-
           </Table>
         </CardContent>
       </Card>

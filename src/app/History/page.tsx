@@ -7,12 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -23,13 +20,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  TooltipProvider,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
+  TooltipProvider
 } from "@/components/ui/tooltip";
 import { FarmerInput } from "@/app/components/FarmerInput";
-import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
 
 interface Transaction {
@@ -49,9 +42,6 @@ export default function History() {
   const [userRole, setUserRole] = useState("nothing");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [batchSize, setBatchSize] = useState<number>(5);
-  const [displayedTransactions, setDisplayedTransactions] =
-    useState<number>(50);
   const [selectedTab, setSelectedTab] = useState<string>("all");
 
   const getUserDetails = async () => {
@@ -61,7 +51,7 @@ export default function History() {
       setUserRole(res.data.data.role);
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details. Please try again.");
+      // toast.error("Error fetching user details. Please try again.");
     }
   };
 
@@ -85,18 +75,11 @@ export default function History() {
         apiUrl += `?userId=${userId}&userRole=${userRole}`;
       }
 
-      // if (userRole === "manager" && farmerId === "") {
-      //   apiUrl += `?userId=${userId}&userRole=${userRole}`;
-      // } else {
-      //   apiUrl += `?userId=${userId}&farmerId=${farmerId}&userRole=${userRole}`;
-
-      // }
-
       const response = await axios.get(apiUrl);
       setTransactions(response.data.transactions);
     } catch (error: any) {
       console.error("Error fetching transactions:", error.message);
-      toast.error("Error fetching transactions");
+      // toast.error("Error fetching transactions");
     } finally {
       setLoading(false);
     }
@@ -183,7 +166,6 @@ export default function History() {
   return (
     <TooltipProvider>
       <Navbar />
-
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
           <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -216,13 +198,6 @@ export default function History() {
                   </div>
                 )}
 
-                {/* <button
-                  onClick={fetchTransactions}
-                  className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                >
-                  Fetch
-                </button> */}
-
                 <div className="ml-auto flex items-center gap-2">
                   <ListFilter className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -239,36 +214,6 @@ export default function History() {
                     <option value="week">This Week</option>
                     <option value="month">This Month</option>
                   </select>
-
-
-                  {/* <Button variant="outline" size="sm" className="h-8 gap-1">
-                        <ListFilter className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                          Filter
-                        </span>
-                      </Button> */}
-
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="h-8 gap-1">
-                        <ListFilter className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                          Filter
-                        </span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuCheckboxItem checked>
-                        Active
-                      </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
-                        Archived
-                      </DropdownMenuCheckboxItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
                 </div>
               </div>
 

@@ -4,9 +4,8 @@ import TableDemo from "./TableDemo";
 import { TransactionBox } from "./TransactionBox";
 import { useRef } from "react";
 
-export function Dashboard() {
+export function ManagerPage() {
 
-  //const [pendingTransactionsKey, setPendingTransactionsKey] = useState(0);
   const pendingTransactionsRef = useRef<HTMLButtonElement>(null);
   const tableDemoRef = useRef<HTMLButtonElement>(null);
 
@@ -24,9 +23,6 @@ export function Dashboard() {
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
           <TransactionBox onPay={handlePay}/>
-          {/* <TransactionTable/> */}
-          {/* <HistoryTable/> */}
-          {/* <TableDemo  key={tableDemoKey} onTransactionCreated={handleTransactionCreated} />  */}
           <TableDemo ref={tableDemoRef} onPay={handlePay} />
           <PendingTransactions ref={pendingTransactionsRef} onPay={handlePay} />
         </div>
