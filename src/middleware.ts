@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value || ''
 
   if(isPublicPath && token) {
-    return NextResponse.redirect(new URL('/home', request.nextUrl))
+    return NextResponse.redirect(new URL('/Home', request.nextUrl))
   }
 
   if (!isPublicPath && !token) {
@@ -24,9 +24,8 @@ export const config = {
     '/profile',
     '/login',
     '/signup',
-    '/home',
+    '/Home',
     '/History',
-    '/milkquality',
     '/About_us',
     '/news',
   ]
